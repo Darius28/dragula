@@ -1,0 +1,16 @@
+.pal-item {
+  min-height: 120px;
+  width: 300px;
+  background-color: #e1e1e1;
+  display: flex;
+}
+
+.palette-container {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.pal-text {
+  margin: auto;
+}

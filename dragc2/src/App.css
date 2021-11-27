@@ -1,0 +1,25 @@
+.App {
+  text-align: center;
+  width: 1000px;
+  height: 500px;
+  border: 1px solid black;
+  padding: 2rem;
+  display: flex;
+}
+
+#palette-dom {
+  border: 1px solid black;
+}
+
+#canvas-dom {
+  min-width: 400px;
+  min-height: 450px;
+  border: 1px solid black;
+  padding: 1rem;
+}
+
+.moving {
+  height: 50px;
+  overflow: hidden;
+  color: cornsilk;
+}

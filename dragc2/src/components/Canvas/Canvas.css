@@ -1,0 +1,27 @@
+.canvas-item {
+  height: 120px;
+  width: 500px;
+  padding: 5px;
+}
+
+.hot-pan {
+  border: 1px solid black;
+  border-style: dashed;
+}
+
+.canvas-single {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.canvas-double {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.canvas-triple {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
