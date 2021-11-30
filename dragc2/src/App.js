@@ -16,6 +16,11 @@ const App = {
       type: null,
       oldIndex: null,
     });
+    const [blockItem, setBlockItem] = useState({
+      row: null,
+      col: null,
+      type: null,
+    });
     useEffect(() => {
       const paletteDomContainer = document.querySelector(".palette-container");
       const canvasDomContainer = document.getElementById("canvas-dom");
@@ -41,7 +46,9 @@ const App = {
           let oldIndex = null;
           const droppedElement = el;
           const droppedElementCols = droppedElement.classList[0];
+          console.log("droppedElementCols: ", droppedElementCols);
           const elList = canvasDomContainer.querySelectorAll(".item-layer");
+          console.log("list: ", elList);
           for (let i = 0; i < elList.length; i++) {
             const el = elList[i];
             if (droppedElement.getAttribute("id") === el.getAttribute("id")) {
@@ -102,12 +109,26 @@ const App = {
         removeOnSpill: false,
         revertOnSpill: true,
         accepts: (el, target) => {
-          return (
-            !target.classList.contains("filled") &&
-            el.classList.contains("block-filled")
-          );
+          return true;
         },
-      });
+        moves: (el, target, handle) => {
+          return handle.classList.contains("drop-item");
+        },
+      })
+        .on("drag", (el) => {
+          el.classList.add("move");
+        })
+        .on("drop", (el, target) => {
+          if (target) {
+            const pos = target.id.split("-");
+            setBlockItem({ row: pos[1], col: pos[2], type: el.id });
+          }
+        })
+        .on("dragend", (el) => {
+          if (!el.classList.contains("block-item")) {
+            el.remove();
+          }
+        });
     };
 
     const showLayersArray = () => {
