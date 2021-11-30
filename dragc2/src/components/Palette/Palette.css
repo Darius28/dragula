@@ -14,3 +14,15 @@
 .pal-text {
   margin: auto;
 }
+
+.palette-items {
+  display: flex;
+  gap: 1rem;
+}
+
+.pal-component-item {
+  user-select: none;
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+}

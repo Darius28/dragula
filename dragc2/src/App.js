@@ -24,6 +24,8 @@ const App = {
           return source === paletteDomContainer;
         },
         accepts: (el, target) => {
+          console.log(target, canvasDomContainer);
+          console.log(target === canvasDomContainer);
           return target === canvasDomContainer;
         },
       })
@@ -34,6 +36,7 @@ const App = {
           }
         })
         .on("drop", (el) => {
+          console.log("drop");
           let newRowIndex = null;
           let oldIndex = null;
           const droppedElement = el;
@@ -60,6 +63,7 @@ const App = {
           }
         })
         .on("dragend", (el) => {
+          console.log("dragend");
           if (!el.classList.contains("moving")) {
             el.remove();
           }
@@ -90,9 +94,20 @@ const App = {
     }, [newLayer, addLayer]);
 
     const resetHotPans = () => {
-      // const paletteItemsDomContainer = document.querySelectorAll(".canvas-item")
+      const paletteItemsDomContainer =
+        document.querySelectorAll(".palette-items");
       const hotPan = document.querySelectorAll(".hot-pan");
-      console.log("hot pan: ", hotPan);
+      console.log("hot pan: ", hotPan, paletteItemsDomContainer);
+      dragula([paletteItemsDomContainer, hotPan], {
+        removeOnSpill: false,
+        revertOnSpill: true,
+        accepts: (el, target) => {
+          return (
+            !target.classList.contains("filled") &&
+            el.classList.contains("block-filled")
+          );
+        },
+      });
     };
 
     const showLayersArray = () => {

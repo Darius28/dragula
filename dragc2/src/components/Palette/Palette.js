@@ -4,11 +4,19 @@ import "./Palette.css";
 const Palette = {
   Index: () => {
     const view = (
-      <div className="palette-container">
-        <Palette.SingleCol />
-        <Palette.DoubleCol />
-        <Palette.TripleCol />
-      </div>
+      <>
+        <h4>Layout</h4>
+        <div className="palette-container">
+          <Palette.SingleCol />
+          <Palette.DoubleCol />
+          <Palette.TripleCol />
+        </div>
+        <h4>Items</h4>
+        <div className="palette-items">
+          <Palette.Button />
+          <Palette.Logo />
+        </div>
+      </>
     );
     return view;
   },
@@ -32,6 +40,22 @@ const Palette = {
     const view = (
       <div className="pal-col-3 pal-item item-layer">
         <div className="pal-text">3 Columns</div>
+      </div>
+    );
+    return view;
+  },
+  Button: () => {
+    const view = (
+      <div className="pal-component-item">
+        <h4>CTA Button</h4>
+      </div>
+    );
+    return view;
+  },
+  Logo: () => {
+    const view = (
+      <div className="pal-component-item">
+        <h4>Logo</h4>
       </div>
     );
     return view;
