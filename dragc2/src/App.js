@@ -21,6 +21,7 @@ const App = {
       col: null,
       type: null,
     });
+    const [hotPanListener, setHotPanListener] = useState();
     useEffect(() => {
       const paletteDomContainer = document.querySelector(".palette-container");
       console.log("paletteDomCOntainer: ", paletteDomContainer);
@@ -106,7 +107,8 @@ const App = {
       console.log("blockItem.type: ", blockItem.type);
       if (blockItem.type) {
         addBlockItem(blockItem);
-        setBlockItem({ row: null, col: null, type: null });
+        // this is crashing the app, how do I set this to null??
+        // setBlockItem({ row: null, col: null, type: null });
       }
     }, [blockItem]);
 
@@ -116,17 +118,26 @@ const App = {
       console.log("palette items: ", paletteItemsDomContainer);
       const hotPan = document.querySelectorAll(".hot-pan");
       console.log("hot pan: ", hotPan, paletteItemsDomContainer);
-      dragula([paletteItemsDomContainer, ...hotPan], {
+
+      if (hotPanListener) {
+        hotPanListener.destroy();
+      }
+
+      const listener = dragula([paletteItemsDomContainer, ...hotPan], {
         removeOnSpill: false,
         revertOnSpill: true,
-        copy: (el, target) => {
-          return true;
+        copy: (el, source) => {
+          return source === paletteItemsDomContainer;
         },
         accepts: (el, target) => {
-          return true;
+          return (
+            !target.classList.contains("filled") &&
+            !el.classList.contains("block-filled")
+          );
         },
         moves: (el, target, handle) => {
-          return true;
+          console.log("moves handle: ", handle);
+          return handle.classList.contains("pal-component-item");
         },
       })
         .on("drag", (el) => {
@@ -140,10 +151,11 @@ const App = {
           }
         })
         .on("dragend", (el) => {
-          // if (!el.classList.contains("block-item")) {
-          //   el.remove();
-          // }
+          if (!el.classList.contains("block-item")) {
+            el.remove();
+          }
         });
+      setHotPanListener(listener);
     }
 
     const showLayersArray = () => {
