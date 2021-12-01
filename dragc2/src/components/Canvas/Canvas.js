@@ -7,7 +7,6 @@ const Canvas = {
     const {
       providerObj: { layers },
     } = useContext(Context);
-    console.log("canvas layers: ", layers);
     const view =
       layers &&
       layers.map((item, index) => {

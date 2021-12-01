@@ -46,7 +46,7 @@ const Palette = {
   },
   Button: () => {
     const view = (
-      <div className="pal-component-item">
+      <div className="pal-component-item" id="cta-button">
         <h4>CTA Button</h4>
       </div>
     );
@@ -54,7 +54,7 @@ const Palette = {
   },
   Logo: () => {
     const view = (
-      <div className="pal-component-item">
+      <div className="pal-component-item" id="logo-button">
         <h4>Logo</h4>
       </div>
     );

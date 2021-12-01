@@ -9,7 +9,7 @@ var dragula = require("react-dragula");
 const App = {
   Index: () => {
     const {
-      providerObj: { layers, addLayer, removeOldPosnLayer },
+      providerObj: { layers, addLayer, removeOldPosnLayer, addBlockItem },
     } = useContext(Context);
     const [newLayer, setNewLayer] = useState({
       posn: null,
@@ -23,14 +23,13 @@ const App = {
     });
     useEffect(() => {
       const paletteDomContainer = document.querySelector(".palette-container");
+      console.log("paletteDomCOntainer: ", paletteDomContainer);
       const canvasDomContainer = document.getElementById("canvas-dom");
       dragula([paletteDomContainer, canvasDomContainer], {
         copy: (el, source) => {
           return source === paletteDomContainer;
         },
         accepts: (el, target) => {
-          console.log(target, canvasDomContainer);
-          console.log(target === canvasDomContainer);
           return target === canvasDomContainer;
         },
       })
@@ -95,24 +94,39 @@ const App = {
           type: null,
           oldIndex: null,
         });
+        console.log("about to exec rhp");
         setTimeout(() => resetHotPans());
+        console.log("reset hot pans done");
         // why resetHotPans????
       }
     }, [newLayer, addLayer]);
 
-    const resetHotPans = () => {
-      const paletteItemsDomContainer =
-        document.querySelectorAll(".palette-items");
+    useEffect(() => {
+      console.log("blockItem UE", blockItem);
+      console.log("blockItem.type: ", blockItem.type);
+      if (blockItem.type) {
+        addBlockItem(blockItem);
+        setBlockItem({ row: null, col: null, type: null });
+      }
+    }, [blockItem]);
+
+    function resetHotPans() {
+      console.log("in rhp");
+      const paletteItemsDomContainer = document.querySelector(".palette-items");
+      console.log("palette items: ", paletteItemsDomContainer);
       const hotPan = document.querySelectorAll(".hot-pan");
       console.log("hot pan: ", hotPan, paletteItemsDomContainer);
-      dragula([paletteItemsDomContainer, hotPan], {
+      dragula([paletteItemsDomContainer, ...hotPan], {
         removeOnSpill: false,
         revertOnSpill: true,
+        copy: (el, target) => {
+          return true;
+        },
         accepts: (el, target) => {
           return true;
         },
         moves: (el, target, handle) => {
-          return handle.classList.contains("drop-item");
+          return true;
         },
       })
         .on("drag", (el) => {
@@ -120,16 +134,17 @@ const App = {
         })
         .on("drop", (el, target) => {
           if (target) {
+            console.log("in target: ", el.id);
             const pos = target.id.split("-");
             setBlockItem({ row: pos[1], col: pos[2], type: el.id });
           }
         })
         .on("dragend", (el) => {
-          if (!el.classList.contains("block-item")) {
-            el.remove();
-          }
+          // if (!el.classList.contains("block-item")) {
+          //   el.remove();
+          // }
         });
-    };
+    }
 
     const showLayersArray = () => {
       console.log("layers: ", layers);

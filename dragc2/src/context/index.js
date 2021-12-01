@@ -1,9 +1,11 @@
 import { createContext, useState, useEffect } from "react";
+import EditBlock from "../components/EditBlock/EditBlock";
 
 export const Context = createContext({
   layers: [],
   addLayer: (addObj) => {},
   removeOldPosnLayer: (oldIndex) => {},
+  addBlockItem: (blockItemObj) => {},
 });
 
 const Provider = (props) => {
@@ -27,10 +29,22 @@ const Provider = (props) => {
     });
   };
 
+  const addBlockItemHandler = (blockObj) => {
+    console.log(blockObj);
+    setLayers((prevState) => {
+      prevState[+blockObj.row].data[+blockObj.col] = {
+        id: blockObj.type,
+        data: EditBlock.GetPreset(blockObj.type),
+      };
+      return prevState;
+    });
+  };
+
   const providerObj = {
     layers,
     addLayer: addLayerHandler,
     removeOldPosnLayer: removeOldPosnLayerHandler,
+    addBlockItem: addBlockItemHandler,
   };
 
   return (
