@@ -51,6 +51,7 @@ const App = {
           console.log("list: ", elList);
           for (let i = 0; i < elList.length; i++) {
             const el = elList[i];
+            console.log("EL: ", el);
             if (droppedElement.getAttribute("id") === el.getAttribute("id")) {
               newRowIndex = i;
             }

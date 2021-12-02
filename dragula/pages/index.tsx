@@ -61,16 +61,17 @@ const Home: NextPage = () => {
           const droppedElementCols = droppedElement.classList[0];
           console.log("droppedElementCols: ", droppedElementCols);
 
-          //HTMLElement????
-          const elList = canvasDomContainer.querySelectorAll(".item-layer");
-          console.log("list: ", elList);
+          // Shows array of NodeList in normal reactJS app
+          const elList: NodeList  =
+            canvasDomContainer.querySelectorAll(".item-layer");
           for (let i = 0; i < elList.length; i++) {
-            const el = elList[i];
+            const el: HTMLElement = elList[i];
+
             if (droppedElement.getAttribute("id") === el.getAttribute("id")) {
               newRowIndex = i;
             }
             if (el.classList.contains("moving")) {
-              const elId: string = el.getAttribute("id");
+              const elId: string | null = el.getAttribute("id");
               oldIndex = +elId.replace("row-", "");
               break;
             }
@@ -136,7 +137,7 @@ const Home: NextPage = () => {
     if (process.browser) {
       const paletteItemsDomContainer = document.querySelector(".palette-items");
       console.log("palette items: ", paletteItemsDomContainer);
-      const hotPan = document.querySelectorAll(".hot-pan");
+      const hotPan: NodeList = document.querySelectorAll(".hot-pan");
       console.log("hot pan: ", hotPan, paletteItemsDomContainer);
 
       if (hotPanListener) {
