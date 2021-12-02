@@ -36,8 +36,8 @@ const Home: NextPage = () => {
     if (process.browser) {
       const paletteDomContainer = document.querySelector("palette-container");
       console.log("paletteDomContainer: ", paletteDomContainer);
-      const canvasDomContainer: null | HTMLElement =
-        document.getElementById("canvas-dom");
+      const canvasDomContainer: HTMLElement =
+        document.getElementById("canvas-dom")!;
       dragula([paletteDomContainer, canvasDomContainer], {
         copy: (el: HTMLElement, source: HTMLElement) => {
           return source === paletteDomContainer;
@@ -62,16 +62,14 @@ const Home: NextPage = () => {
           console.log("droppedElementCols: ", droppedElementCols);
 
           // Shows array of NodeList in normal reactJS app
-          const elList: NodeList  =
-            canvasDomContainer.querySelectorAll(".item-layer");
+          const elList: NodeList = canvasDomContainer.querySelectorAll(".item-layer");
           for (let i = 0; i < elList.length; i++) {
             const el: HTMLElement = elList[i];
-
             if (droppedElement.getAttribute("id") === el.getAttribute("id")) {
               newRowIndex = i;
             }
             if (el.classList.contains("moving")) {
-              const elId: string | null = el.getAttribute("id");
+              const elId: string = el.getAttribute("id")!;
               oldIndex = +elId.replace("row-", "");
               break;
             }
@@ -143,7 +141,7 @@ const Home: NextPage = () => {
       if (hotPanListener) {
         hotPanListener.destroy();
       }
-
+      // hot pan spread operator was giving error, had to add downlevelIteration: true in tsconfig 
       const listener = dragula([paletteItemsDomContainer, ...hotPan], {
         removeOnSpill: false,
         revertOnSpill: true,
