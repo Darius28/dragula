@@ -7,7 +7,7 @@ type LayerInner = {
 };
 
 type Layer = {
-  // doesnt take 'string', but takes 'String'???
+  // doesn't take 'string', but takes 'String'???
   id: String;
   data: LayerInner[];
 };
