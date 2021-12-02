@@ -24,7 +24,7 @@ const App = {
     const [hotPanListener, setHotPanListener] = useState();
     useEffect(() => {
       const paletteDomContainer = document.querySelector(".palette-container");
-      console.log("paletteDomCOntainer: ", paletteDomContainer);
+      console.log("paletteDomContainer: ", paletteDomContainer);
       const canvasDomContainer = document.getElementById("canvas-dom");
       dragula([paletteDomContainer, canvasDomContainer], {
         copy: (el, source) => {
@@ -83,8 +83,10 @@ const App = {
       if (newLayer.type) {
         console.log("newLayer: ", newLayer);
         if (newLayer.oldIndex !== null) {
+          console.log("datatype removeposn: ", newLayer.oldIndex);
           removeOldPosnLayer(newLayer.oldIndex);
         }
+        console.log("addLayer Datatypes: ", newLayer.posn, newLayer.type, data);
         addLayer({
           posn: newLayer.posn,
           type: newLayer.type,
@@ -106,6 +108,7 @@ const App = {
       console.log("blockItem UE", blockItem);
       console.log("blockItem.type: ", blockItem.type);
       if (blockItem.type) {
+        console.log("BLOCK ITEM TYPE !!!!!!!!!!: ", blockItem);
         addBlockItem(blockItem);
         // this is crashing the app, how do I set this to null??
         // setBlockItem({ row: null, col: null, type: null });
