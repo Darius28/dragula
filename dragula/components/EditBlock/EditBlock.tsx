@@ -2,7 +2,7 @@ import React from "react";
 import { ITEMS_DATA } from "../Data/Data";
 
 const EditBlock = {
-  GetPreset: (type) => {
+  GetPreset: (type: string) => {
     let data = {};
     switch (type) {
       case ITEMS_DATA.LOGO:

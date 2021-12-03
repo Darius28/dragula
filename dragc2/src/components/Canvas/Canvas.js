@@ -15,6 +15,7 @@ const Canvas = {
     return view;
   },
   GetElement: ({ row, data }) => {
+    console.log('canvas.js getelement row and data: !!!!!!!!!!!!!!!!! ', data)
     if (!data) {
       return <div className="block-default"></div>;
     }
@@ -34,7 +35,6 @@ const Canvas = {
     }
   },
   SingleCol: ({ row, data }) => {
-    console.log("SingleCol data: ", data);
     const view = (
       <div
         className="pal-col-1 item-layer canvas-single canvas-item"
@@ -111,11 +111,14 @@ const Canvas = {
     return view;
   },
   Logo: ({ data }) => {
-    console.log("logo data: ", data)
     const view = (
       <div className="block-item block-filled">
         <div className="block-item-logo">
-          {data && data.image ? <img className="block-item-logo-img" src={data.image} /> : ""}
+          {data && data.image ? (
+            <img className="block-item-logo-img" src={data.image} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

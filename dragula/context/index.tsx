@@ -1,35 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import EditBlock from "../components/EditBlock/EditBlock";
-
-type LayerInner = {
-  id: string;
-  data: any;
-};
-
-type Layer = {
-  // doesn't take 'string', but takes 'String'???
-  id: String;
-  data: LayerInner[];
-};
-
-type AddObj = {
-  posn: number;
-  type: String;
-  data: any[];
-};
-
-type blockItemObj = {
-  row: string;
-  col: string;
-  type: string;
-};
-
-type ContextObj = {
-  layers: Layer[];
-  addLayer: (addObj: AddObj) => void;
-  removeOldPosnLayer: (oldIndex: number) => void;
-  addBlockItem: (blockItem: blockItemObj) => void;
-};
+import { Layer, AddObj, blockItemObj, ContextObj } from "../types";
 
 export const Context = createContext<ContextObj>({
   layers: [],

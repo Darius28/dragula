@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../../context";
 import "./Canvas.module.css";
+import { CTAButtonType, ImageType, LayerInner } from "../../types";
 
 const Canvas = {
   Index: () => {
@@ -9,12 +10,20 @@ const Canvas = {
     } = useContext(Context);
     const view =
       layers &&
-      layers.map((item, index) => {
+      layers.map((item: LayerInner, index: number) => {
         return <Canvas.GetElement key={index} row={index} data={item} />;
       });
     return view;
   },
-  GetElement: ({ row, data }) => {
+  GetElement: ({
+    row,
+    data,
+  }: {
+    row: number;
+    // data takes in many datatypes, how to satisfy all?
+    // LayerInner is wrong
+    data: { id: string; data: LayerInner[] };
+  }) => {
     if (!data) {
       return <div className="block-default"></div>;
     }
@@ -33,7 +42,7 @@ const Canvas = {
         return <div>FAIL</div>;
     }
   },
-  SingleCol: ({ row, data }) => {
+  SingleCol: ({ row, data }: { row: number; data: LayerInner[] }) => {
     console.log("SingleCol data: ", data);
     const view = (
       <div
@@ -50,7 +59,7 @@ const Canvas = {
     );
     return view;
   },
-  DoubleCol: ({ row, data }) => {
+  DoubleCol: ({ row, data }: { row: number; data: LayerInner[] }) => {
     const view = (
       <div
         className="pal-col-2 item-layer canvas-double canvas-item"
@@ -72,7 +81,7 @@ const Canvas = {
     );
     return view;
   },
-  TripleCol: ({ row, data }) => {
+  TripleCol: ({ row, data }: { row: number; data: LayerInner[] }) => {
     const view = (
       <div
         className="pal-col-3 item-layer canvas-triple canvas-item"
@@ -100,7 +109,7 @@ const Canvas = {
     );
     return view;
   },
-  CTAButton: ({ data }) => {
+  CTAButton: ({ data }: { data: CTAButtonType }) => {
     const view = (
       <div className="block-item block-filled">
         <div className="block-item-btn">
@@ -110,12 +119,16 @@ const Canvas = {
     );
     return view;
   },
-  Logo: ({ data }) => {
-    console.log("logo data: ", data)
+  Logo: ({ data }: { data: ImageType }) => {
+    console.log("logo data: ", data);
     const view = (
       <div className="block-item block-filled">
         <div className="block-item-logo">
-          {data && data.image ? <img className="block-item-logo-img" src={data.image} /> : ""}
+          {data && data.image ? (
+            <img className="block-item-logo-img" src={data.image} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );
