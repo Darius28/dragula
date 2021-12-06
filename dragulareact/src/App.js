@@ -1,5 +1,5 @@
 import "./App.css";
-import "../node_modules/dragula/dist/dragula.min.css";
+import "dragula/dist/dragula.min.css";
 import { Context } from "./context";
 import { useContext, useState, useEffect } from "react";
 import Palette from "./components/Palette/Palette";
