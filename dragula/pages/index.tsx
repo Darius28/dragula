@@ -11,7 +11,7 @@ import React, { useContext, useEffect, useState } from "react";
 const Home: NextPage = () => {
   const {
     providerObj: { layers, addLayer, removeOldPosnLayer, addBlockItem },
-  } = useContext(Context);
+  }: any = useContext(Context);
   const [newLayer, setNewLayer] = useState<{
     posn: null | number;
     type: null | string;
@@ -34,10 +34,10 @@ const Home: NextPage = () => {
   const [hotPanListener, setHotPanListener] = useState<any>();
   useEffect(() => {
     if (process.browser) {
-      const paletteDomContainer = document.querySelector("palette-container");
+      const paletteDomContainer = window.document.querySelector("palette-container");
       console.log("paletteDomContainer: ", paletteDomContainer);
       const canvasDomContainer: HTMLElement =
-        document.getElementById("canvas-dom")!;
+        window.document.getElementById("canvas-dom")!;
       dragula([paletteDomContainer, canvasDomContainer], {
         copy: (el: HTMLElement, source: HTMLElement) => {
           return source === paletteDomContainer;
@@ -62,9 +62,11 @@ const Home: NextPage = () => {
           console.log("droppedElementCols: ", droppedElementCols);
 
           // Shows array of NodeList in normal reactJS app
-          const elList: NodeList = canvasDomContainer.querySelectorAll(".item-layer");
+          const elList: NodeList =
+            canvasDomContainer.querySelectorAll(".item-layer");
           for (let i = 0; i < elList.length; i++) {
-            const el: HTMLElement = elList[i];
+            // any for now
+            const el: any = elList[i];
             if (droppedElement.getAttribute("id") === el.getAttribute("id")) {
               newRowIndex = i;
             }
@@ -133,15 +135,15 @@ const Home: NextPage = () => {
   function resetHotPans() {
     console.log("in rhp");
     if (process.browser) {
-      const paletteItemsDomContainer = document.querySelector(".palette-items");
+      const paletteItemsDomContainer = window.document.querySelector(".palette-items");
       console.log("palette items: ", paletteItemsDomContainer);
-      const hotPan: NodeList = document.querySelectorAll(".hot-pan");
+      const hotPan: NodeList = window.document.querySelectorAll(".hot-pan");
       console.log("hot pan: ", hotPan, paletteItemsDomContainer);
 
       if (hotPanListener) {
         hotPanListener.destroy();
       }
-      // hot pan spread operator was giving error, had to add downlevelIteration: true in tsconfig 
+      // hot pan spread operator was giving error, had to add downlevelIteration: true in tsconfig
       const listener = dragula([paletteItemsDomContainer, ...hotPan], {
         removeOnSpill: false,
         revertOnSpill: true,

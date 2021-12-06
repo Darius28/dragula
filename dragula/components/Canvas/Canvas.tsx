@@ -7,7 +7,7 @@ const Canvas = {
   Index: () => {
     const {
       providerObj: { layers },
-    } = useContext(Context);
+    }: any = useContext(Context);
     const view =
       layers &&
       layers.map((item: LayerInner, index: number) => {
@@ -22,7 +22,8 @@ const Canvas = {
     row: number;
     // data takes in many datatypes, how to satisfy all?
     // LayerInner is wrong
-    data: { id: string; data: LayerInner[] };
+    // data: { id: string; data: LayerInner[]
+    data: { id: string; data: any };
   }) => {
     if (!data) {
       return <div className="block-default"></div>;
@@ -35,9 +36,9 @@ const Canvas = {
       case "pal-col-3":
         return <Canvas.TripleCol row={row} data={data.data} />;
       case "cta-button":
-        return <Canvas.CTAButton row={row} data={data.data} />;
+        return <Canvas.CTAButton data={data.data} />;
       case "logo-button":
-        return <Canvas.Logo row={row} data={data.data} />;
+        return <Canvas.Logo data={data.data} />;
       default:
         return <div>FAIL</div>;
     }
